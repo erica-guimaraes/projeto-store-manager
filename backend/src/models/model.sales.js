@@ -19,8 +19,7 @@ const findById = async (id) => {
                     ON sp.sale_id = sa.id
                     WHERE sp.sale_id = ?
                     ORDER BY sp.sale_id, sp.product_id`;
-    const [[salesId]] = await connection.execute(query, [id]);
-
+    const [salesId] = await connection.execute(query, [id]);
     return camelize(salesId);
 };
 
