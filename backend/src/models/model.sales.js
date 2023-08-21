@@ -23,7 +23,12 @@ const findById = async (id) => {
     return camelize(salesId);
 };
 
+const addSales = async (products) => {
+   
+};
+
 module.exports = {
     findAll,
     findById,
+    addSales,
 };
