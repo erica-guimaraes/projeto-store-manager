@@ -14,9 +14,9 @@ const findById = async (id) => {
     return { status: 'SUCCESSFUL', data: result };
 };
 
-const registerProduct = async (product) => {
+const addProduct = async (product) => {
   const { name } = product;
-  const result = await modelProducts.registerProduct(name);
+  const result = await modelProducts.addProduct(name);
 
   return { status: 'CREATED', data: { id: result, name } };
 };
@@ -24,5 +24,5 @@ const registerProduct = async (product) => {
 module.exports = {
     findAll,
     findById,
-    registerProduct,
+    addProduct,
 };

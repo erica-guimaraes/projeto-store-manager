@@ -51,4 +51,20 @@ describe('Testes para camada Products Service', function () {
     const serviceResponse = { status: 'NOT_FOUND', data: { message: 'Product not found' } };
     expect(response).to.deep.equal(serviceResponse);
   });
+
+  it('Adicionando um novo produto', async function () {
+    const nameProduct = { name: 'ProdutoX' };
+
+    const productAdded = {
+      id: 4,
+      name: 'ProdutoX',
+    };
+    
+    sinon.stub(modelProducts, 'addProduct').resolves(4);
+
+    const response = await serviceProducts.addProduct(nameProduct);
+
+    expect(response.status).to.equal('CREATED');
+    expect(response.data).to.deep.equal(productAdded);
+  });
 });
