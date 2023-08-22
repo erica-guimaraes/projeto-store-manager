@@ -1,4 +1,4 @@
-const { modelSales } = require('../models');
+const { modelSales, modelProducts } = require('../models');
 
 const findAll = async () => {
     const result = await modelSales.findAll();
@@ -14,9 +14,18 @@ const findById = async (id) => {
     return { status: 'SUCCESSFUL', data: result };
 };
 
-const addSales = async (products) => {
-  const result = await modelSales.addSales(products);
-  return { status: 'CREATED', data: result };
+const addSales = async (vendas) => {
+  const bodyIds = vendas.map(({ productId }) => productId);
+  const allProducts = await modelProducts.findAll();
+  const bdIds = allProducts.map(({ id }) => id);
+
+  if (bodyIds.some((id) => !bdIds.includes(id))) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+  }
+
+  const result = await modelSales.addSales(vendas);
+  const data = { id: result, itemsSold: vendas };
+  return { status: 'CREATED', data };
 };
 
 module.exports = {

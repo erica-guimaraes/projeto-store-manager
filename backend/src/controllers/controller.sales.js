@@ -13,9 +13,9 @@ const findById = async (req, res) => {
 };
 
 const addSales = async (req, res) => {
-  const products = req.body;
-  const { status, data } = await serviceSales.addSales(products);
-    return res.status(mapStatusHTTP(status)).json(data);
+  const vendas = req.body;
+  const { status, data } = await serviceSales.addSales(vendas);
+  return res.status(mapStatusHTTP(status)).json(data);
 };
 
 module.exports = {
