@@ -12,4 +12,6 @@ routerProducts.get('/:id', controllerProducts.findById);
 
 routerProducts.put('/:id', validationNewProduct, controllerProducts.updateProduct);
 
+routerProducts.delete('/:id', controllerProducts.deleteProduct);
+
 module.exports = routerProducts;
