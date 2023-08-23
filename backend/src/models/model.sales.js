@@ -23,7 +23,7 @@ const findById = async (id) => {
 };
 
 const addSales = async (vendas) => {
-  const query = 'INSERT INTO sales () values ()';
+  const query = 'INSERT INTO sales () VALUES ()';
 
   const queryVendas = `INSERT INTO 
                         sales_products (sale_id, product_id, quantity) values (?, ?, ?)`;
