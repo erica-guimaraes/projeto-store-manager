@@ -11,7 +11,41 @@ describe('Testes para as Middlewares de Products', function () {
   it('Validando a inclusão de um novo produto', async function () {
     const next = sinon.stub().returns();
     const req = {
-      body: { name: 'ProdutoX' },
+      body: { name: '' },
+    };
+
+    const res = { 
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub().returns({ message: '"name" is required' }),
+    };
+
+    await validationNewProduct(req, res, next);
+
+    expect(res.status.calledWith(400)).to.be.equal(true);
+    expect(res.json.calledWith({ message: '"name" is required' })).to.be.equal(true);
+  });
+
+  it('Validando a inclusão de um novo produto - nome maior que 5 caracteres', async function () {
+    const next = sinon.stub().returns();
+    const req = {
+      body: { name: 'Edu' },
+    };
+
+    const res = { 
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub().returns({ message: '"name" length must be at least 5 characters long' }),
+    };
+
+    await validationNewProduct(req, res, next);
+
+    expect(res.status.calledWith(422)).to.be.equal(true);
+    expect(res.json.calledWith({ message: '"name" length must be at least 5 characters long' })).to.be.equal(true);
+  });
+
+  it('Testando Next', async function () {
+    const next = sinon.stub().returns();
+    const req = {
+      body: { name: 'Eduardo da Silva' },
     };
 
     const res = { 
@@ -21,6 +55,6 @@ describe('Testes para as Middlewares de Products', function () {
 
     await validationNewProduct(req, res, next);
 
-    expect(next).to.have.been.calledWith();
+    expect(next.called).to.be.equal(true);
   });
 });

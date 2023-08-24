@@ -67,15 +67,4 @@ describe('Testes para camada Products Service', function () {
     expect(response.status).to.equal('CREATED');
     expect(response.data).to.deep.equal(productAdded);
   });
-
-  // it('Alterando produto', async function () {
-  //   sinon.stub(modelProducts, 'apdateProduct').resolves();
-
-  //   const id = 1;
-  //   const name = 'Martelo do Batman';
-  //   const response = await serviceProducts.updateProduct(name, id);
-
-  //   expect(response.status).to.equal('SUCCESSFUL');
-  //   expect(response.data).to.deep.equal({ id: 1, name: 'Martelo do Batman' });
-  // });
 });
