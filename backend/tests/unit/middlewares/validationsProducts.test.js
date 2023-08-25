@@ -1,14 +1,14 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
-const validationNewProduct = require('../../../src/middlewares/validationsProducts');
+const validationsProduct = require('../../../src/middlewares/validationsProducts');
 
 const { expect } = chai;
 
 chai.use(sinonChai);
 
 describe('Testes para as Middlewares de Products', function () {
-  it('Validando a inclusão de um novo produto', async function () {
+  it('Validando a inclusão de um novo produto - se existe o nome', async function () {
     const next = sinon.stub().returns();
     const req = {
       body: { name: '' },
@@ -19,7 +19,7 @@ describe('Testes para as Middlewares de Products', function () {
       json: sinon.stub().returns({ message: '"name" is required' }),
     };
 
-    await validationNewProduct(req, res, next);
+    await validationsProduct(req, res, next);
 
     expect(res.status.calledWith(400)).to.be.equal(true);
     expect(res.json.calledWith({ message: '"name" is required' })).to.be.equal(true);
@@ -36,7 +36,7 @@ describe('Testes para as Middlewares de Products', function () {
       json: sinon.stub().returns({ message: '"name" length must be at least 5 characters long' }),
     };
 
-    await validationNewProduct(req, res, next);
+    await validationsProduct(req, res, next);
 
     expect(res.status.calledWith(422)).to.be.equal(true);
     expect(res.json.calledWith({ message: '"name" length must be at least 5 characters long' })).to.be.equal(true);
@@ -53,7 +53,7 @@ describe('Testes para as Middlewares de Products', function () {
       json: sinon.stub(),
     };
 
-    await validationNewProduct(req, res, next);
+    await validationsProduct(req, res, next);
 
     expect(next.called).to.be.equal(true);
   });
