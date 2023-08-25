@@ -27,17 +27,17 @@ const updateProduct = async (req, res) => {
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
-const deleteProduct = async (req, res) => {
-  const { id } = req.params;
+// const deleteProduct = async (req, res) => {
+//   const { id } = req.params;
 
-  const { status, data } = await serviceProducts.deleteProduct(id);
-  return res.status(mapStatusHTTP(status)).json(data);
-};
+//   const { status, data } = await serviceProducts.deleteProduct(id);
+//   return res.status(mapStatusHTTP(status)).json(data);
+// };
 
 module.exports = {
     findAll,
     findById,
     addProduct,
     updateProduct,
-    deleteProduct,
+    // deleteProduct,
 };
