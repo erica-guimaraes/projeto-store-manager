@@ -58,29 +58,6 @@ describe('Testes para a camada Product Controller', function () {
     expect(res.json.calledWith(productIdMock)).to.be.equal(true);
   });
 
-  // it('Adicionando um novo produto', async function () {
-  //   const addProductMock = {
-  //     id: 4,
-  //     name: 'Martelo do Batman',
-  //   };
-
-  //   const req = {
-  //     body: {
-  //       name: 'Martelo do Batman',
-  //     },
-  //   };
-  //   const res = {
-  //     status: sinon.stub().returnsThis(),
-  //     json: sinon.stub(),
-  //   };
-
-  //   sinon.stub(connection, 'execute').resolves([[addProductMock]]);
-
-  //   await controllerProducts.addProduct(req, res);
-  //   expect(res.status.calledWith(201)).to.be.equal(true);
-  //   expect(res.json.calledWith({ insertId: 1 })).to.be.equal(true);
-  // });
-
   it('Atualizando um produto', async function () {
     const newProductMock = {
       id: 1,
