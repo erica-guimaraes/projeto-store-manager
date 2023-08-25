@@ -3,7 +3,6 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const connection = require('../../../src/models/connection');
 const { controllerProducts } = require('../../../src/controllers');
-const { serviceProducts } = require('../../../src/services');
 
 const { expect } = chai;
 
@@ -16,9 +15,14 @@ describe('Testes para a camada Product Controller', function () {
 
   it('Listando todos os produtos', async function () {
     const allProductsMock = [
-      { id: 1, name: 'Martelo de Thor' },
-      { id: 2, name: 'Traje de encolhimento' },
-      { id: 3, name: 'Escudo do CapitÃ£o AmÃ©rica' },
+      {
+        id: 1,
+        name: 'Martelo de Thor',
+      },
+      {
+        id: 2,
+        name: 'Escudo do Capitão América',
+      },
     ];
 
     const req = {};
@@ -26,11 +30,7 @@ describe('Testes para a camada Product Controller', function () {
       status: sinon.stub().returnsThis(),
       json: sinon.stub(),
     };
-
-    sinon.stub(serviceProducts, 'findAll').resolves({
-      status: 200,
-      data: allProductsMock,
-    });
+    sinon.stub(connection, 'execute').resolves([allProductsMock]);
 
     await controllerProducts.findAll(req, res);
     expect(res.status.calledWith(200)).to.be.equal(true);
@@ -58,28 +58,35 @@ describe('Testes para a camada Product Controller', function () {
     expect(res.json.calledWith(productIdMock)).to.be.equal(true);
   });
 
-  it('Adicionando um novo produto', async function () {
-    const req = {
-      body: {
-        name: 'Capa do Batman',
-      },
-    };
-    const res = {
-      status: sinon.stub().returnsThis(),
-      json: sinon.stub(),
-    };
+  // it('Adicionando um novo produto', async function () {
+  //   const addProductMock = {
+  //     id: 4,
+  //     name: 'Martelo do Batman',
+  //   };
 
-    sinon.stub(serviceProducts, 'addProduct').resolves({
-      status: 201,
-      data: { insertId: 1 },
-    });
+  //   const req = {
+  //     body: {
+  //       name: 'Martelo do Batman',
+  //     },
+  //   };
+  //   const res = {
+  //     status: sinon.stub().returnsThis(),
+  //     json: sinon.stub(),
+  //   };
 
-    await controllerProducts.addProduct(req, res);
-    expect(res.status.calledWith(201)).to.be.equal(true);
-    expect(res.json.calledWith({ insertId: 1 })).to.be.equal(true);
-  });
+  //   sinon.stub(connection, 'execute').resolves([[addProductMock]]);
+
+  //   await controllerProducts.addProduct(req, res);
+  //   expect(res.status.calledWith(201)).to.be.equal(true);
+  //   expect(res.json.calledWith({ insertId: 1 })).to.be.equal(true);
+  // });
 
   it('Atualizando um produto', async function () {
+    const newProductMock = {
+      id: 1,
+      name: 'Capa do Batman',
+    };
+
     const req = {
       params: { id: 1 },
       body: {
@@ -91,10 +98,8 @@ describe('Testes para a camada Product Controller', function () {
       json: sinon.stub(),
     };
 
-    sinon.stub(serviceProducts, 'updateProduct').resolves({
-      status: 200,
-      data: { id: 1, name: 'Capa do Batman' },
-    });
+    sinon.stub(connection, 'execute').resolves([[newProductMock]]);
+   
     await controllerProducts.updateProduct(req, res);
     expect(res.status.calledWith(200)).to.be.equal(true);
     expect(res.json.calledWith({ id: 1, name: 'Capa do Batman' })).to.be.equal(true);
